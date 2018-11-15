@@ -1,0 +1,3 @@
+recursive-include hitchqs *.py
+recursive-include hitchqs/templates *
+include VERSION

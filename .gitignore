@@ -1,0 +1,7 @@
+*.kate-swp
+*.pyc
+build/
+dist/
+hitchqs.egg-info/
+hitch/gen
+temp/
