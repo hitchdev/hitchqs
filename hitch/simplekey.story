@@ -1,12 +1,12 @@
-Simple hitch:
+Explain key.py:
   about: |
-    Create simple hitch folder with a key.py that does
-    very little but explain itself.
+    Create simple hitch folder with a key.py that has
+    various commands that explain how hitchkey works.
   given:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: explain
+      args: explainkey
       will output: x
   - files appear:
       hitch/hitchreqs.in: |
