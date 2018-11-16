@@ -63,3 +63,10 @@ def directories():
         DIR.project
     )  # Directory *above* key.py directory (the folder the 'hitch' directory is in)
     print(DIR.gen)  # ~/.hitch/jonafd -- build directory. 'gen' symlinks here.
+
+
+def ipython():
+    """
+    Use IPython.embed() to experiment in the python environment.
+    """
+    import IPython ; IPython.embed()
