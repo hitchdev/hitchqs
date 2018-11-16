@@ -53,7 +53,7 @@ class Engine(BaseEngine):
         ).bin.quickstart
 
 
-    def quickstart(self, args):
+    def quickstart(self, args, will_output=None):
         import shlex
         self.qs(*shlex.split(args)).in_dir(self.path.state).run()
 

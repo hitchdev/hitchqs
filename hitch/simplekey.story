@@ -25,13 +25,13 @@ Simple hitch:
 
         def runcommand():
             """
-            hk runcommand -> "ls"
+            hk runcommand -> "ls -l"
             """
             # See https://hitchdev.com/commandlib/
             # -- for more details on how to use commandlib
-            Command("ls").in_dir(
-                DIR.key
-            ).run()  # DIR.key is the folder this file - key.py - is in
+            Command("ls", "-l").in_dir(DIR.key).run()
+
+            # N.B. DIR.key is the folder this file - key.py - is in
 
 
         def twoargs(arg1, arg2):

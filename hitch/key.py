@@ -101,8 +101,7 @@ def regression():
     Run regression testing - lint and then run all tests.
     """
     lint()
-    doctests()
-    storybook = _storybook({}).only_uninherited()
+    storybook = _storybook().only_uninherited()
     storybook.with_params(**{"python version": "2.7.14"}).filter(
         lambda story: not story.info.get("fails_on_python_2")
     ).ordered_by_name().play()
