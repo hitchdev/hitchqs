@@ -69,4 +69,6 @@ def ipython():
     """
     Use IPython.embed() to experiment in the python environment.
     """
-    import IPython ; IPython.embed()
+    import IPython
+
+    IPython.embed()
