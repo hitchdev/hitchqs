@@ -1,0 +1,4 @@
+- If directory exists, abandon.
+- Write message when complete.
+- Run script after done.
+- Start running tests that can test the quickstarted code.
