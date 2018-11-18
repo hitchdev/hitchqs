@@ -7,6 +7,9 @@ class Engine(BaseEngine):
         website=GivenProperty(Str()),
     )
 
+    def __init__(self, paths):
+        self.path = paths
+
     def set_up(self):
         print("set up")
         print(self.given["website"])
