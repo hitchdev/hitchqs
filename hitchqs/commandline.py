@@ -11,7 +11,7 @@ def run():
     arguments = sys.argv[1:]
     assert len(arguments) == 1
     template = arguments[0]
-    assert template in ["simplekey", "explainkey", "hitchstory"]
+    assert template in ["simplekey", "explainkey", "hitchstory", "tutorialhitchstory"]
     if Path("hitch").exists():
         print((
             "Directory '{}' already exists here, "
