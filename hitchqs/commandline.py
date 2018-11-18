@@ -16,3 +16,4 @@ def run():
     dirtemplate.DirTemplate(
         name="hitch", src=TEMPLATE_DIR / template, dest=cwd
     ).ensure_built()
+    Path("builddb.sqlite").remove()

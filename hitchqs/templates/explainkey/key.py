@@ -56,7 +56,7 @@ def directories():
     """
     Show all usable special directories.
     """
-    print(DIR.cwd)  # Directory hk was run in
+    print(DIR.cur)  # Directory hk was run in
     print(DIR.share)  # ~/.hitch/share - for shared build artefacts (e.g. base pythons)
     print(DIR.key)  # Directory this key.py file is in (usually 'hitch')
     print(

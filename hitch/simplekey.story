@@ -23,4 +23,4 @@ Simple key.py:
             print(DIR.key)
             print(DIR.project)
             print(DIR.share)
-            print(DIR.cwd)
+            print(DIR.cur)
