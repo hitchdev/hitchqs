@@ -1,1 +1,1 @@
-import quickstart
+from hitchqs import commandline
