@@ -7,7 +7,7 @@ Explain key.py:
   steps:
   - quickstart:
       args: explainkey
-      will output: x
+      will output: Quickstart run successfully!
   - files appear:
       hitch/hitchreqs.in: |
         hitchrun

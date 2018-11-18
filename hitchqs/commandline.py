@@ -12,8 +12,15 @@ def run():
     assert len(arguments) == 1
     template = arguments[0]
     assert template in ["simplekey", "explainkey"]
+    if Path("hitch").exists():
+        print((
+            "Directory '{}' already exists here, "
+            "remove it to run quickstart again."
+        ).format("hitch"))
+        sys.exit(1)
     cwd = Path(os.getcwd()).abspath()
     dirtemplate.DirTemplate(
         name="hitch", src=TEMPLATE_DIR / template, dest=cwd
     ).ensure_built()
     Path("builddb.sqlite").remove()
+    print("Quickstart run successfully!")

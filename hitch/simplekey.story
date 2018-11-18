@@ -7,7 +7,7 @@ Simple key.py:
   steps:
   - quickstart:
       args: simplekey
-      will output: x
+      will output: Quickstart run successfully!
   - files appear:
       hitch/hitchreqs.in: |
         hitchrun

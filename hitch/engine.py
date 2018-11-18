@@ -1,15 +1,10 @@
 from hitchstory import StoryCollection, BaseEngine, exceptions, validate, no_stacktrace_for
 from hitchstory import GivenDefinition, GivenProperty, InfoDefinition, InfoProperty
-from templex import Templex
-from strictyaml import Optional, Str, Map, Int, Bool, Enum, load
+from strictyaml import MapPattern, Str, Map, Int, Bool, Enum, load
+from hitchrunpy import ExamplePythonCode, HitchRunPyException
 import hitchpylibrarytoolkit
 from templex import Templex
-from hitchrunpy import (
-    ExamplePythonCode,
-    HitchRunPyException,
-    ExpectedExceptionMessageWasDifferent,
-)
-
+import shlex
 
 
 CODE_TYPE = Map({"in python 2": Str(), "in python 3": Str()}) | Str()
@@ -20,6 +15,7 @@ class Engine(BaseEngine):
 
     given_definition = GivenDefinition(
         python_version=GivenProperty(Str()),
+        files=GivenProperty(MapPattern(Str(), Str())),
     )
 
     info_definition = InfoDefinition(
@@ -41,6 +37,12 @@ class Engine(BaseEngine):
             self.path.state.rmtree(ignore_errors=True)
         self.path.state.mkdir()
 
+        for filename, contents in self.given.get("files", {}).items():
+            filepath = self.path.state.joinpath(filename)
+            if not filepath.dirname().exists():
+                filepath.dirname().makedirs()
+            filepath.write_text(contents)
+
         self.path.profile = self.path.gen.joinpath("profile")
 
         if not self.path.profile.exists():
@@ -52,10 +54,28 @@ class Engine(BaseEngine):
             self.given["python version"],
         ).bin.quickstart
 
+    @validate(timeout=Int(), exit_code=Int())
+    def quickstart(self, args, will_output=None, exit_code=0, timeout=5):
+        process = self.qs(*shlex.split(args)).in_dir(self.path.state).interact().run()
+        process.wait_for_finish()
 
-    def quickstart(self, args, will_output=None):
-        import shlex
-        self.qs(*shlex.split(args)).in_dir(self.path.state).run()
+        actual_output = process.stripshot()
+
+        if will_output is not None:
+            try:
+                Templex(will_output).assert_match(actual_output)
+            except AssertionError:
+                if self._rewrite:
+                    self.current_step.update(**{"will output": actual_output})
+                else:
+                    raise
+
+        assert process.exit_code == exit_code, "Exit code should be {} was {}, output:\n{}".format(
+            exit_code,
+            process.exit_code,
+            actual_output,
+        )
+
 
     @no_stacktrace_for(FileNotFoundError)
     def files_appear(self, **files):
