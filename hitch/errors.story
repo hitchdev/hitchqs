@@ -13,3 +13,13 @@ If directory exists, abandon:
       exit code: 1
       will output: Directory 'hitch' already exists here, remove it to run quickstart
         again.
+
+
+Tutorial not found:
+  given:
+    python version: 3.7.0
+  steps:
+  - quickstart:
+      args: tutorial nonexistent
+      exit code: 1
+      will output: tutorial 'nonexistent' does not exist.
