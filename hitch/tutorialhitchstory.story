@@ -7,7 +7,7 @@ Hitchstory Tutorial:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: tutorialhitchstory
+      args: tutorial hitchstory
       will output: Quickstart run successfully!
   - files appear:
       hitch/hitchreqs.in: |

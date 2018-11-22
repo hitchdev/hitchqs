@@ -1,0 +1,16 @@
+## Documentation : https://hitchdev.com/seleniumdirector
+
+login:
+  appears when: login page identifier
+  elements:
+    login page identifier: class=class_this_is_a_login_page
+    username: class=class_username
+    password: class=class_password
+    ok: class=class_ok
+dashboard:
+  appears when: dashboard identifier
+  elements:
+    dashboard identifier:
+      class: class_this_is_a_dashboard_element
+    message:
+      class: class_dashboard_element

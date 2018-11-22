@@ -1,4 +1,4 @@
-Simple key.py:
+Skeleton key.py:
   about: |
     Create simple hitch folder with a key.py and
     hitchreqs.in that does the bare minimum.
@@ -6,7 +6,7 @@ Simple key.py:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: simplekey
+      args: skeleton key
       will output: Quickstart run successfully!
   - files appear:
       hitch/hitchreqs.in: |

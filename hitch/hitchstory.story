@@ -7,7 +7,7 @@ Hitchstory:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: hitchstory
+      args: skeleton hitchstory
       will output: Quickstart run successfully!
   - files appear:
       hitch/hitchreqs.in: |
@@ -15,13 +15,13 @@ Hitchstory:
         pathquery
         hitchrun
       hitch/key.py: |
-        from hitchstory import exceptions, StoryCollection
+        from hitchstory import StoryCollection, HitchStoryException
         from pathquery import pathquery
         from engine import Engine
         from hitchrun import DIR, expected
 
 
-        @expected(exceptions.HitchStoryException)
+        @expected(HitchStoryException)
         def bdd(*keywords):
             """
             Run story with name containing keywords.
@@ -29,7 +29,7 @@ Hitchstory:
             StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR)).shortcut(*keywords).play()
 
 
-        @expected(exceptions.HitchStoryException)
+        @expected(HitchStoryException)
         def regression():
             """
             Run all stories

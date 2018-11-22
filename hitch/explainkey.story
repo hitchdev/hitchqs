@@ -1,12 +1,13 @@
-Explain key.py:
+key.py tutorial:
   about: |
     Create simple hitch folder with a key.py that has
-    various commands that explain how hitchkey works.
+    various commands that explain various hitchkey
+    features.
   given:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: explainkey
+      args: tutorial key
       will output: Quickstart run successfully!
   - files appear:
       hitch/hitchreqs.in: |

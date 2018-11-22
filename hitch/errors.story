@@ -9,7 +9,7 @@ If directory exists, abandon:
         # Existing code
   steps:
   - quickstart:
-      args: simplekey
+      args: skeleton key
       exit code: 1
       will output: Directory 'hitch' already exists here, remove it to run quickstart
         again.
