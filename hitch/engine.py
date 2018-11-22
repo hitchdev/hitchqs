@@ -4,6 +4,7 @@ from strictyaml import MapPattern, Str, Map, Int, Bool, Enum, load
 from hitchrunpy import ExamplePythonCode, HitchRunPyException
 import hitchpylibrarytoolkit
 from templex import Templex
+from commandlib import Command
 import shlex
 
 
@@ -26,9 +27,10 @@ class Engine(BaseEngine):
         experimental=InfoProperty(schema=Bool()),
     )
 
-    def __init__(self, keypath, rewrite=False):
+    def __init__(self, keypath, rewrite=False, build=False):
         self.path = keypath
         self._rewrite = rewrite
+        self._build = build
 
     def set_up(self):
         """Set up your applications and the test environment."""
@@ -54,8 +56,7 @@ class Engine(BaseEngine):
             self.given["python version"],
         ).bin.quickstart
 
-    @validate(timeout=Int(), exit_code=Int())
-    def quickstart(self, args, will_output=None, exit_code=0, timeout=5):
+    def _run(self, command, args, will_output=None, exit_code=0, timeout=5):
         process = self.qs(*shlex.split(args)).in_dir(self.path.state).interact().run()
         process.wait_for_finish()
 
@@ -76,6 +77,9 @@ class Engine(BaseEngine):
             actual_output,
         )
 
+    @validate(timeout=Int(), exit_code=Int())
+    def quickstart(self, args, will_output=None, exit_code=0, timeout=5):
+        self._run(self.qs, args, will_output, exit_code, timeout=timeout)
 
     @no_stacktrace_for(FileNotFoundError)
     def files_appear(self, **files):
@@ -93,3 +97,17 @@ class Engine(BaseEngine):
         import IPython
 
         IPython.embed()
+
+
+    def initial_hk(self):
+        if self._build:
+            Command("hk").in_dir(self.path.state).run()
+
+    def hk(self, args, will_output=None):
+        if self._build:
+            self._run(Command("hk"), args, will_output, exit_code, timeout=timeout)
+
+    def tear_down(self):
+        if self._build:
+            if self.path.state.exists():
+                Command("hk", "--clean").ignore_errors().in_dir(self.path.state).run()

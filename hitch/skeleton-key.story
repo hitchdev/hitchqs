@@ -12,15 +12,19 @@ Skeleton key.py:
       hitch/hitchreqs.in: |
         hitchrun
       hitch/key.py: |
-        from hitchrun import DIR
+        from commandlib import CommandError, Command
+        from hitchrun import DIR, expected
 
 
+        @expected(CommandError)
         def helloworld():
             """
-            Print all of the available directories.
+            Say hello world.
             """
-            print(DIR.gen)
-            print(DIR.key)
-            print(DIR.project)
-            print(DIR.share)
-            print(DIR.cur)
+            DIR.gen.joinpath("hello.txt").write_text("Hello world")
+            Command("cat", "hello.txt").in_dir(DIR.gen).run()
+
+  - initial hk
+  - hk:
+      args: helloworld
+      will output: hello world

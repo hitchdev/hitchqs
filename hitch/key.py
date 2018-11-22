@@ -58,13 +58,8 @@ RUNNABLE COMMANDS
 
 @expected(HitchStoryException)
 def bdd(*keywords):
-    """
-    Run story matching keywords.
-    """
-    settings = _personal_settings().data
-    _storybook().with_params(
-        **{"python version": settings["params"]["python version"]}
-    ).only_uninherited().shortcut(*keywords).play()
+    """Run individual story matching key words."""
+    _storybook().only_uninherited().shortcut(*keywords).play()
 
 
 @expected(HitchStoryException)
@@ -72,27 +67,13 @@ def rbdd(*keywords):
     """
     Run story matching keywords and rewrite story if code changed.
     """
-    settings = _personal_settings().data
-    settings["engine"]["rewrite"] = True
-    _storybook(rewrite=True).with_params(
-        **{"python version": settings["params"]["python version"]}
-    ).only_uninherited().shortcut(*keywords).play()
+    _storybook(rewrite=True).only_uninherited().shortcut(*keywords).play()
 
 
 @expected(HitchStoryException)
-def regressfile(filename):
-    """
-    Run all stories in filename 'filename' in python 2 and 3.
-    """
-    _storybook({"rewrite": False}).in_filename(filename).with_params(
-        **{"python version": "2.7.14"}
-    ).filter(
-        lambda story: not story.info.get("fails_on_python_2")
-    ).ordered_by_name().play()
-
-    _storybook({"rewrite": False}).with_params(
-        **{"python version": "3.7.0"}
-    ).in_filename(filename).ordered_by_name().play()
+def bbdd(*keywords):
+    """Run individual story matching key words and build."""
+    _storybook(build=True).only_uninherited().shortcut(*keywords).play()
 
 
 @expected(HitchStoryException)
@@ -101,11 +82,7 @@ def regression():
     Run regression testing - lint and then run all tests.
     """
     lint()
-    storybook = _storybook().only_uninherited()
-    storybook.with_params(**{"python version": "2.7.14"}).filter(
-        lambda story: not story.info.get("fails_on_python_2")
-    ).ordered_by_name().play()
-    storybook.with_params(**{"python version": "3.7.0"}).ordered_by_name().play()
+    _storybook().ordered_by_name().play()
 
 
 def reformat():
