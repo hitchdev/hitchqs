@@ -32,7 +32,7 @@ class Engine(BaseEngine):
 
     def set_up(self):
         """Set up your applications and the test environment."""
-        self.path.state = self.path.gen.joinpath("state")
+        self.path.state = self.path.project.parent / "tempqs"
         if self.path.state.exists():
             self.path.state.rmtree(ignore_errors=True)
         self.path.state.mkdir()
