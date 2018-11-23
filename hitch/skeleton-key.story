@@ -27,4 +27,4 @@ Skeleton key.py:
   - initial hk
   - hk:
       args: helloworld
-      will output: hello world
+      will output: Hello world

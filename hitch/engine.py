@@ -57,7 +57,7 @@ class Engine(BaseEngine):
         ).bin.quickstart
 
     def _run(self, command, args, will_output=None, exit_code=0, timeout=5):
-        process = self.qs(*shlex.split(args)).in_dir(self.path.state).interact().run()
+        process = command(*shlex.split(args)).in_dir(self.path.state).interact().run()
         process.wait_for_finish()
 
         actual_output = process.stripshot()
@@ -81,6 +81,14 @@ class Engine(BaseEngine):
     def quickstart(self, args, will_output=None, exit_code=0, timeout=5):
         self._run(self.qs, args, will_output, exit_code, timeout=timeout)
 
+    def hk(self, args, will_output=None, exit_code=0, timeout=5):
+        if self._build:
+            self._run(Command("hk"), args, will_output, exit_code, timeout=timeout)
+
+    def initial_hk(self):
+        if self._build:
+            Command("hk").in_dir(self.path.state).run()
+
     @no_stacktrace_for(FileNotFoundError)
     def files_appear(self, **files):
         for filename, expected_content in files.items():
@@ -98,14 +106,6 @@ class Engine(BaseEngine):
 
         IPython.embed()
 
-
-    def initial_hk(self):
-        if self._build:
-            Command("hk").in_dir(self.path.state).run()
-
-    def hk(self, args, will_output=None):
-        if self._build:
-            self._run(Command("hk"), args, will_output, exit_code, timeout=timeout)
 
     def tear_down(self):
         if self._build:
