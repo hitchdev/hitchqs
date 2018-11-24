@@ -23,3 +23,5 @@ Tutorial not found:
       args: tutorial nonexistent
       exit code: 1
       will output: tutorial 'nonexistent' does not exist.
+
+#Too many arguments:
