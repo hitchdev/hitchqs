@@ -1,10 +1,11 @@
 from hitchstory import StoryCollection, BaseEngine, exceptions, validate, no_stacktrace_for
 from hitchstory import GivenDefinition, GivenProperty, InfoDefinition, InfoProperty
-from strictyaml import MapPattern, Str, Map, Int, Bool, Enum, load
+from strictyaml import MapPattern, Seq, Str, Map, Int, Bool, Enum, load
 from hitchrunpy import ExamplePythonCode, HitchRunPyException
 import hitchpylibrarytoolkit
 from templex import Templex
 from commandlib import Command
+from pathquery import pathquery
 import shlex
 
 
@@ -89,17 +90,18 @@ class Engine(BaseEngine):
         if self._build:
             Command("hk").in_dir(self.path.state).run()
 
-    @no_stacktrace_for(FileNotFoundError)
-    def files_appear(self, **files):
-        for filename, expected_content in files.items():
-            actual_content = self.path.state.joinpath(filename).text()
-            try:
-                Templex(actual_content).assert_match(expected_content)
-            except AssertionError:
-                if self._rewrite:
-                    self.current_step.update(**{filename: actual_content})
-                else:
-                    raise
+    @validate(filenames=Seq(Str()))
+    def files_appear(self, filenames):
+        appeared = set()
+        should_appear = set(filenames)
+        for existing_file in pathquery(self.path.state):
+            if "__pycache__" not in existing_file and not existing_file.isdir():
+                appeared.add(str(existing_file.relpath(self.path.state)))
+        
+        diff = should_appear.symmetric_difference(appeared)
+        
+        assert diff == set(), \
+            "Difference in files that appeared:\n{}".format('\n'.join(diff))
 
     def pause(self, message="Pause"):
         import IPython

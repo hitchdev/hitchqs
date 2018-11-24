@@ -10,45 +10,8 @@ Hitchstory:
       args: skeleton hitchstory
       will output: Quickstart run successfully!
   - files appear:
-      hitch/hitchreqs.in: |
-        hitchstory
-        pathquery
-        hitchrun
-      hitch/key.py: |
-        from hitchstory import StoryCollection, HitchStoryException
-        from pathquery import pathquery
-        from engine import Engine
-        from hitchrun import DIR, expected
-
-
-        @expected(HitchStoryException)
-        def bdd(*keywords):
-            """
-            Run story with name containing keywords.
-            """
-            StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR)).shortcut(*keywords).play()
-
-
-        @expected(HitchStoryException)
-        def regression():
-            """
-            Run all stories
-            """
-            StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR)).ordered_by_name().play()
-      hitch/engine.py: |
-        from hitchstory import BaseEngine
-
-
-        class Engine(BaseEngine):
-            def __init__(self, paths):
-                self.path = paths
-
-            def set_up(self):
-                pass
-
-            def do_something(self):
-                pass
-      hitch/mystory.story: |
-        My first story:
-          steps:
-          - Do something
+      filenames:
+      - hitch/hitchreqs.in
+      - hitch/key.py
+      - hitch/engine.py
+      - hitch/mystory.story
