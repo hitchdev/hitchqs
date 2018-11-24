@@ -97,3 +97,24 @@ Hitchstory Tutorial:
                 I think I got hacked!
           - Clicked: send email
           - Email was sent
+
+  - initial hk
+  - hk:
+      args: bdd email
+      will output: |-
+        RUNNING Email sent in /home/colm/hitch/tempqs/hitch/mystory.story ... set up
+        /login
+        password: hunter2
+        username: AzureDiamond
+        login
+        new email
+        contents: Hey guys,
+
+        I think I got hacked!
+
+        to: Cthon98@aol.com
+        send email
+        email was sent
+        success
+        SUCCESS in 0.0 seconds.
+        tear down run
