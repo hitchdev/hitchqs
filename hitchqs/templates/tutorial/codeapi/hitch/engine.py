@@ -8,8 +8,9 @@ import hitchbuildpy
 class Engine(BaseEngine):
     given_definition = GivenDefinition(my_string=GivenProperty(Str()))
 
-    def __init__(self, paths):
+    def __init__(self, paths, rewrite=False):
         self.path = paths
+        self._rewrite = rewrite
 
     def set_up(self):
         virtualenv = (
@@ -26,9 +27,20 @@ class Engine(BaseEngine):
             ExamplePythonCode(virtualenv.bin.python, self.path.gen)
             .with_setup_code(self.given.get("setup", ""))
             .with_terminal_size(160, 100)
-            .with_long_strings(my_string=self.given.get("my_string"))
+            .with_strings(my_string=self.given.get("my_string"))
+            .with_modules(*pathquery(self.path.project) - pathquery("hitch"))
         )
 
     @no_stacktrace_for(HitchRunPyException)
     def run(self, code, will_output=None):
-        pass
+        result = self.example_py_code.with_code(code).run()
+
+        if will_output is not None:
+            try:
+                Templex(will_output).assert_match(result.output)
+            except AssertionError:
+                if self._rewrite:
+                    self.current_step.update(**{"will output": actual_output})
+                else:
+                    raise
+
