@@ -25,5 +25,6 @@ About tutorial templates:
       exit code: 0
       will output: |-
         seleniumdirector
+        codeapi
         key
         hitchstory

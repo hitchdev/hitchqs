@@ -10,9 +10,7 @@ class Engine(BaseEngine):
     def set_up(self):
         self._webdriver = webdriver.Chrome()
         self._director = WebDirector(
-            self.driver,
-            self.dirs.key / "selectors.yml",
-            default_timeout=5
+            self.driver, self.dirs.key / "selectors.yml", default_timeout=5
         )
 
     @no_stacktrace_for(SeleniumDirectorException)
@@ -38,5 +36,5 @@ class Engine(BaseEngine):
         self._webdriver.refresh()
 
     def tear_down(self):
-        if hasattr(self, '_webdriver'):
+        if hasattr(self, "_webdriver"):
             self._webdriver.quit()

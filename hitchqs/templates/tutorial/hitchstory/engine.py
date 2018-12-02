@@ -3,9 +3,7 @@ from strictyaml import Str
 
 
 class Engine(BaseEngine):
-    given_definition = GivenDefinition(
-        website=GivenProperty(Str()),
-    )
+    given_definition = GivenDefinition(website=GivenProperty(Str()))
 
     def __init__(self, paths):
         self.path = paths
