@@ -153,15 +153,20 @@ def rerun(version="3.7.0"):
 
 @expected(CommandError)
 @expected(AssertionError)
-def copyback(*directories):
-    assert len(directories) == 2
-    backdir = DIR.project / "hitchqs" / "templates" / directories[0] / directories[1]
+def copyback(template_type, name):
+    """
+    After debugging a template, copy it back to the main repo.
+    """
+    assert template_type in ["tutorial", "skeleton"]
+    backdir = DIR.project / "hitchqs" / "templates" / template_type / name
+    folder_name = load(backdir.joinpath("hitchqs.yml").text()).data['path']
     assert backdir.exists()
-    tempqs = DIR.project.parent / "tempqs" / "codeapi"
-    hitch_pycache = tempqs / "hitch" / "__pycache__"
-    code_pycache = tempqs / "__pycache__"
-    for filepath in pathquery(tempqs).is_not_dir() - pathquery(hitch_pycache) - pathquery(code_pycache):
+    tempqs = DIR.project.parent / "tempqs" / folder_name
+    template_files = pathquery(tempqs).is_not_dir() - \
+        pathquery(tempqs).ext("pyc") - \
+        pathquery(tempqs).named("hitchreqs.txt")
+
+    for filepath in template_files:
         relpath = filepath.relpath(tempqs)
-        if relpath != "hitch/hitchreqs.txt":
-            print("Copying back {}".format(relpath))
-            filepath.copy(backdir / relpath)
+        print("Copying back {}".format(relpath))
+        filepath.copy(backdir / relpath)
