@@ -1,6 +1,7 @@
-Add two numbers:
+Print the addition of two numbers:
   given:
-    setup: from example import add
+    setup: |
+      from example import add
   steps:
   - Run:
       code: add(1, 1)

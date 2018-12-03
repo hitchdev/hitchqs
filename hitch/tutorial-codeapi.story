@@ -14,3 +14,9 @@ Tutorial Code API:
       - codeapi/hitch/key.py
       - codeapi/hitch/engine.py
       - codeapi/hitch/mystory.story
+  - initial hk:
+      in dir: codeapi/
+  - hk:
+      args: bdd my story
+      will output: passed
+      in dir: codeapi/

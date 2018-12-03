@@ -6,7 +6,7 @@ import hitchbuildpy
 
 
 class Engine(BaseEngine):
-    given_definition = GivenDefinition(my_string=GivenProperty(Str()))
+    given_definition = GivenDefinition(setup=GivenProperty(Str()))
 
     def __init__(self, paths, rewrite=False):
         self.path = paths
@@ -27,7 +27,6 @@ class Engine(BaseEngine):
             ExamplePythonCode(virtualenv.bin.python, self.path.gen)
             .with_setup_code(self.given.get("setup", ""))
             .with_terminal_size(160, 100)
-            .with_strings(my_string=self.given.get("my_string"))
             .with_modules(*pathquery(self.path.project) - pathquery("hitch"))
         )
 

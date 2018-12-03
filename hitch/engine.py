@@ -58,7 +58,7 @@ class Engine(BaseEngine):
         ).bin.quickstart
 
     def _run(self, command, args, will_output=None, exit_code=0, timeout=5):
-        process = command(*shlex.split(args)).in_dir(self.path.state).interact().run()
+        process = command(*shlex.split(args)).interact().run()
         process.wait_for_finish()
 
         actual_output = process.stripshot()
@@ -80,15 +80,15 @@ class Engine(BaseEngine):
 
     @validate(timeout=Int(), exit_code=Int())
     def quickstart(self, args, will_output=None, exit_code=0, timeout=5):
-        self._run(self.qs, args, will_output, exit_code, timeout=timeout)
+        self._run(self.qs.in_dir(self.path.state), args, will_output, exit_code, timeout=timeout)
 
-    def hk(self, args, will_output=None, exit_code=0, timeout=5):
+    def hk(self, args, will_output=None, exit_code=0, timeout=5, in_dir=""):
         if self._build:
-            self._run(Command("hk"), args, will_output, exit_code, timeout=timeout)
+            self._run(Command("hk").in_dir(self.path.state / in_dir), args, will_output, exit_code, timeout=timeout)
 
-    def initial_hk(self):
+    def initial_hk(self, in_dir=""):
         if self._build:
-            Command("hk").in_dir(self.path.state).run()
+            Command("hk").in_dir(self.path.state / in_dir).run()
 
     @validate(filenames=Seq(Str()))
     def files_appear(self, filenames):
