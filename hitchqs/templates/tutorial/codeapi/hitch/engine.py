@@ -1,7 +1,6 @@
 from hitchstory import BaseEngine, GivenDefinition, GivenProperty
 from hitchstory import no_stacktrace_for
 from hitchrunpy import ExamplePythonCode, HitchRunPyException
-from pathquery import pathquery
 from templex import Templex
 from strictyaml import Str
 import hitchbuildpy
@@ -41,7 +40,6 @@ class Engine(BaseEngine):
                 Templex(will_output).assert_match(result.output)
             except AssertionError:
                 if self._rewrite:
-                    self.current_step.update(**{"will output": actual_output})
+                    self.current_step.update(**{"will output": result.output})
                 else:
                     raise
-
