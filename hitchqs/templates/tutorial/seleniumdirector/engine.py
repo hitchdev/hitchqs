@@ -1,6 +1,7 @@
 from hitchstory import BaseEngine, no_stacktrace_for
 from seleniumdirector import WebDirector, SeleniumDirectorException
-from selenium import webdriver, WebDriverException
+from selenium.common.exceptions import WebDriverException
+from selenium import webdriver
 
 
 class Engine(BaseEngine):
@@ -10,7 +11,7 @@ class Engine(BaseEngine):
     def set_up(self):
         self._webdriver = webdriver.Chrome()
         self._director = WebDirector(
-            self.driver, self.dirs.key / "selectors.yml", default_timeout=5
+            self._webdriver, self.dirs.key / "selectors.yml", default_timeout=5
         )
 
     @no_stacktrace_for(SeleniumDirectorException)
