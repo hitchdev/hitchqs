@@ -3,4 +3,5 @@ pathquery
 hitchrun
 hitchbuildpy
 hitchrunpy
+templex
 # add package names here, save and just rerun "hk command" and they will be installed

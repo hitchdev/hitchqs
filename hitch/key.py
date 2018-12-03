@@ -152,12 +152,16 @@ def rerun(version="3.7.0"):
 
 
 @expected(CommandError)
+@expected(AssertionError)
 def copyback(*directories):
     assert len(directories) == 2
-    tempqs = DIR.project.parent / "tempqs"
-    hitch_pycache = tempqs / "codeapi" / "hitch" / "__pycache__"
-    code_pycache = tempqs / "codeapi" / "__pycache__"
+    backdir = DIR.project / "hitchqs" / "templates" / directories[0] / directories[1]
+    assert backdir.exists()
+    tempqs = DIR.project.parent / "tempqs" / "codeapi"
+    hitch_pycache = tempqs / "hitch" / "__pycache__"
+    code_pycache = tempqs / "__pycache__"
     for filepath in pathquery(tempqs).is_not_dir() - pathquery(hitch_pycache) - pathquery(code_pycache):
         relpath = filepath.relpath(tempqs)
         if relpath != "hitch/hitchreqs.txt":
-            print(relpath)
+            print("Copying back {}".format(relpath))
+            filepath.copy(backdir / relpath)

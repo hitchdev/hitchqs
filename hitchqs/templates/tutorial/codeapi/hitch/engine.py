@@ -1,6 +1,8 @@
 from hitchstory import BaseEngine, GivenDefinition, GivenProperty
 from hitchstory import no_stacktrace_for
 from hitchrunpy import ExamplePythonCode, HitchRunPyException
+from pathquery import pathquery
+from templex import Templex
 from strictyaml import Str
 import hitchbuildpy
 
@@ -27,7 +29,7 @@ class Engine(BaseEngine):
             ExamplePythonCode(virtualenv.bin.python, self.path.gen)
             .with_setup_code(self.given.get("setup", ""))
             .with_terminal_size(160, 100)
-            .with_modules(*pathquery(self.path.project) - pathquery("hitch"))
+            .with_modules("example.py")
         )
 
     @no_stacktrace_for(HitchRunPyException)
