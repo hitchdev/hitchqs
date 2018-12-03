@@ -17,6 +17,6 @@ Tutorial Code API:
   - initial hk:
       in dir: codeapi/
   - hk:
-      args: bdd my story
+      args: bdd print
       will output: passed
       in dir: codeapi/

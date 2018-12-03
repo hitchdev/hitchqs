@@ -8,6 +8,7 @@ import dirtemplate
 import hitchpylibrarytoolkit
 from engine import Engine
 
+
 PROJECT_NAME = "hitchqs"
 
 """
@@ -148,3 +149,15 @@ def rerun(version="3.7.0"):
     Command(DIR.gen.joinpath("py{0}".format(version), "bin", "python"))(
         DIR.gen.joinpath("state", "examplepythoncode.py")
     ).in_dir(DIR.gen.joinpath("state")).run()
+
+
+@expected(CommandError)
+def copyback(*directories):
+    assert len(directories) == 2
+    tempqs = DIR.project.parent / "tempqs"
+    hitch_pycache = tempqs / "codeapi" / "hitch" / "__pycache__"
+    code_pycache = tempqs / "codeapi" / "__pycache__"
+    for filepath in pathquery(tempqs).is_not_dir() - pathquery(hitch_pycache) - pathquery(code_pycache):
+        relpath = filepath.relpath(tempqs)
+        if relpath != "hitch/hitchreqs.txt":
+            print(relpath)
