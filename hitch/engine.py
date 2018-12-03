@@ -58,10 +58,12 @@ class Engine(BaseEngine):
         ).bin.quickstart
 
     def _run(self, command, args, will_output=None, exit_code=0, timeout=5):
-        process = command(*shlex.split(args)).interact().run()
+        process = command(*shlex.split(args)).interact().screensize(160, 80).run()
         process.wait_for_finish()
 
-        actual_output = process.stripshot()
+        actual_output = process.stripshot()\
+                               .replace(self.path.state, "/path/to")\
+                               .replace("0.2 seconds", "0.1 seconds")
 
         if will_output is not None:
             try:
@@ -86,9 +88,9 @@ class Engine(BaseEngine):
         if self._build:
             self._run(Command("hk").in_dir(self.path.state / in_dir), args, will_output, exit_code, timeout=timeout)
 
-    def initial_hk(self, in_dir=""):
+    def initial_hk(self, args="", in_dir=""):
         if self._build:
-            Command("hk").in_dir(self.path.state / in_dir).run()
+            Command("hk", *shlex.split(args)).in_dir(self.path.state / in_dir).run()
 
     @validate(filenames=Seq(Str()))
     def files_appear(self, filenames):
@@ -97,9 +99,9 @@ class Engine(BaseEngine):
         for existing_file in pathquery(self.path.state):
             if "__pycache__" not in existing_file and not existing_file.isdir():
                 appeared.add(str(existing_file.relpath(self.path.state)))
-        
+
         diff = should_appear.symmetric_difference(appeared)
-        
+
         assert diff == set(), \
             "Difference in files that appeared:\n{}".format('\n'.join(diff))
 

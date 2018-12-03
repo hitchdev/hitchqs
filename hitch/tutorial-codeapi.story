@@ -14,9 +14,12 @@ Tutorial Code API:
       - codeapi/hitch/key.py
       - codeapi/hitch/engine.py
       - codeapi/hitch/mystory.story
+      - codeapi/requirements.txt
   - initial hk:
+      args: bdd print
       in dir: codeapi/
   - hk:
       args: bdd print
-      will output: passed
+      will output: |-
+        RUNNING Print the addition of two numbers in /path/to/codeapi/hitch/mystory.story ... SUCCESS in 0.1 seconds.
       in dir: codeapi/
