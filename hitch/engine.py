@@ -62,8 +62,10 @@ class Engine(BaseEngine):
         process.wait_for_finish()
 
         actual_output = process.stripshot()\
-                               .replace(self.path.state, "/path/to")\
-                               .replace("0.2 seconds", "0.1 seconds")
+                               .replace(self.path.state, "/path/to")
+
+        # Replace 35.1 SECONDS with n.n SECONDS
+        actual_output = re.sub("[0-9]+\.[0-9]", "n.n", actual_output)
 
         if will_output is not None:
             try:

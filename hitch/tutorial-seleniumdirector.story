@@ -16,3 +16,8 @@ Selenium Director:
       - hitch/engine.py
       - hitch/mystory.story
       - hitch/selectors.yml
+  - initial hk
+  - hk:
+      args: bdd
+      will output: |-
+        RUNNING My first story in /path/to/hitch/mystory.story ... SUCCESS in n.n seconds.
