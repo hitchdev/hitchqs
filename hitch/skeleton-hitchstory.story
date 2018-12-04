@@ -1,4 +1,4 @@
-Hitchstory:
+Skeleton Hitchstory:
   about: |
     Create simple hitch folder with a key.py and
     hitchreqs in with hitchstory which runs a simple
@@ -15,3 +15,7 @@ Hitchstory:
       - hitch/key.py
       - hitch/engine.py
       - hitch/mystory.story
+  - initial hk
+  - hk:
+      args: bdd my story
+      will output: x

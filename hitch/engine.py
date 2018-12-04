@@ -7,6 +7,7 @@ from templex import Templex
 from commandlib import Command
 from pathquery import pathquery
 import shlex
+import re
 
 
 CODE_TYPE = Map({"in python 2": Str(), "in python 3": Str()}) | Str()
