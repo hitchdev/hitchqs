@@ -157,8 +157,8 @@ def copyback(template_type, name):
     """
     After debugging a template, copy it back to the main repo.
     """
-    assert template_type in ["tutorial", "skeleton"]
-    backdir = DIR.project / "hitchqs" / "templates" / template_type / name
+    assert template_type in ["demo", "skeleton"]
+    backdir = DIR.project / "hitchqs" / template_type / name
     folder_name = load(backdir.joinpath("hitchqs.yml").text()).data['path']
     assert backdir.exists()
     tempqs = DIR.project.parent / "tempqs" / folder_name

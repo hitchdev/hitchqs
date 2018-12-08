@@ -1,13 +1,13 @@
 Demo Python API:
   about: |
-    Short demo showing off how to develop, test and autodocument
-    python code API projects. This code demonstrates how
+    Demo showing off how to develop, test and autodocument
+    python code API projects using the combination of
 
-    * hitchstory
-    * hitchbuildpy
-    * hitchrunpy
+    * hitchkey -- https://hitchdev.com/hitchkey
+    * hitchstory -- https://hitchdev.com/hitchstory
+    * hitchbuildpy -- https://hitchdev.com/hitchbuildpy
+    * hitchrunpy -- https://hitchdev.com/hitchrunpy
 
-    All work together.
   given:
     python version: 3.7.0
   steps:
@@ -16,11 +16,12 @@ Demo Python API:
       will output: Quickstart run successfully!
   - files appear:
       filenames:
-      - pythonapi/example.py
+      - pythonapi/state.py
+      - pythonapi/game.py
       - pythonapi/hitch/hitchreqs.in
       - pythonapi/hitch/key.py
       - pythonapi/hitch/engine.py
-      - pythonapi/hitch/mystory.story
+      - pythonapi/story/glider.story
       - pythonapi/requirements.txt
   - initial hk:
       args: bdd print

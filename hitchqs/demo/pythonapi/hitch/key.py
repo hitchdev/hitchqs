@@ -9,7 +9,7 @@ def bdd(*keywords):
     """
     Run story with name containing keywords.
     """
-    StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR)).shortcut(
+    StoryCollection(pathquery(DIR.project / "story").ext("story"), Engine(DIR)).shortcut(
         *keywords
     ).play()
 
@@ -20,5 +20,5 @@ def regression():
     Run all stories
     """
     StoryCollection(
-        pathquery(DIR.key).ext("story"), Engine(DIR)
+        pathquery(DIR.project / "story").ext("story"), Engine(DIR)
     ).ordered_by_name().play()
