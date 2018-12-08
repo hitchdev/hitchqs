@@ -20,8 +20,8 @@ Tutorial not found:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: tutorial nonexistent
+      args: demo nonexistent
       exit code: 1
-      will output: tutorial 'nonexistent' does not exist.
+      will output: demo 'nonexistent' does not exist.
 
 #Too many arguments:

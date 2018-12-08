@@ -1,11 +1,13 @@
-Tutorial Code API:
+Demo Python API:
   about: |
-    Create simple project
+    Short demo showing off how hitchstory, hitchbuildpy
+    and hitchrunpy work together to test and document
+    python API code.
   given:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: tutorial codeapi
+      args: demo pythonapi
       will output: Quickstart run successfully!
   - files appear:
       filenames:

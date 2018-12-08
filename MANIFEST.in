@@ -1,3 +1,4 @@
 recursive-include hitchqs *.py
-recursive-include hitchqs/templates *
+recursive-include hitchqs/demo/ *
+recursive-include hitchqs/skeleton/ *
 include VERSION

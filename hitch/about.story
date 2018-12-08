@@ -13,18 +13,18 @@ About skeleton templates:
         hitchstory
 
 
-About tutorial templates:
+About demo templates:
   about: |
-    Output a list of available of usable tutorialss
+    Output a list of available of usable demo
     templates.
   given:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: tutorial
+      args: demo
       exit code: 0
       will output: |-
         seleniumdirector
-        codeapi
+        pythonapi
         key
         hitchstory

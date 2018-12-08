@@ -1,4 +1,4 @@
-Hitchstory Tutorial:
+Demo Tutorial:
   about: |
     Create simple hitch folder with a key.py and
     hitchreqs in with hitchstory which has a bunch of
@@ -7,7 +7,7 @@ Hitchstory Tutorial:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: tutorial hitchstory
+      args: demo hitchstory
       will output: Quickstart run successfully!
   - files appear:
       filenames:

@@ -5,16 +5,16 @@ import dirtemplate
 import os
 
 
-TEMPLATE_DIR = Path(__file__).realpath().abspath().dirname() / "templates"
+THIS_DIR = Path(__file__).realpath().abspath().dirname()
 
 
 def run():
     arguments = argv[1:]
     assert len(arguments) == 1 or len(arguments) == 2
     template_type = arguments[0]
-    assert template_type in ["tutorial", "skeleton"]
+    assert template_type in ["demo", "skeleton"]
     available_templates = [
-        str(path.basename()) for path in TEMPLATE_DIR.joinpath(template_type).listdir()
+        str(path.basename()) for path in THIS_DIR.joinpath(template_type).listdir()
     ]
 
     if len(arguments) == 1:
@@ -28,7 +28,7 @@ def run():
 
     assert template in available_templates
 
-    template_path = TEMPLATE_DIR / template_type / template
+    template_path = THIS_DIR / template_type / template
 
     hitchqs_settings = load(template_path.joinpath("hitchqs.yml").text()).data
 

@@ -1,4 +1,4 @@
-Selenium Director:
+Demo Selenium Director:
   about: |
     Create simple hitch folder with a key.py and
     hitchreqs in with hitchstory which has a bunch of
@@ -7,7 +7,7 @@ Selenium Director:
     python version: 3.7.0
   steps:
   - quickstart:
-      args: tutorial seleniumdirector
+      args: demo seleniumdirector
       will output: Quickstart run successfully!
   - files appear:
       filenames:
