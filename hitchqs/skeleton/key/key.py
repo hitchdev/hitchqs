@@ -28,5 +28,5 @@ def runcommand():
     """
     Run python 3 code with the hk virtualenv.
     """
-    python("pythoncode.py").run()             # run python code using this project's virtualenv
+    python("pythoncode.py").run()  # run python code using this project's virtualenv
     python_bin.python("pythoncode.py").run()  # equivalent

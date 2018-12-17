@@ -1,13 +1,12 @@
 class State(object):
-
     def __init__(self, positions, x, y, width, height):
 
         active_cells = []
 
         for y, row in enumerate(positions.splitlines()):
             for x, cell in enumerate(row.strip()):
-                if cell == 'o':
-                    active_cells.append((x,y))
+                if cell == "o":
+                    active_cells.append((x, y))
 
         board = [[False] * width for row in range(height)]
 
@@ -20,14 +19,14 @@ class State(object):
 
     def display(self):
 
-        output = ''
+        output = ""
 
         for y, row in enumerate(self.board):
             for x, cell in enumerate(row):
                 if self.board[y][x]:
-                    output += ' o'
+                    output += " o"
                 else:
-                    output += ' .'
-            output += '\n'
+                    output += " ."
+            output += "\n"
 
         return output

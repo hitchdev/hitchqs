@@ -159,12 +159,14 @@ def copyback(template_type, name):
     """
     assert template_type in ["demo", "skeleton"]
     backdir = DIR.project / "hitchqs" / template_type / name
-    folder_name = load(backdir.joinpath("hitchqs.yml").text()).data['path']
+    folder_name = load(backdir.joinpath("hitchqs.yml").text()).data["path"]
     assert backdir.exists()
     tempqs = DIR.project.parent / "tempqs" / folder_name
-    template_files = pathquery(tempqs).is_not_dir() - \
-        pathquery(tempqs).ext("pyc") - \
-        pathquery(tempqs).named("hitchreqs.txt")
+    template_files = (
+        pathquery(tempqs).is_not_dir()
+        - pathquery(tempqs).ext("pyc")
+        - pathquery(tempqs).named("hitchreqs.txt")
+    )
 
     for filepath in template_files:
         relpath = filepath.relpath(tempqs)

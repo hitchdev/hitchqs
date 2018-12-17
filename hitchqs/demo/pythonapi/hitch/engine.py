@@ -8,8 +8,7 @@ import hitchbuildpy
 
 class Engine(BaseEngine):
     given_definition = GivenDefinition(
-        setup=GivenProperty(Str()),
-        state=GivenProperty(Str()),
+        setup=GivenProperty(Str()), state=GivenProperty(Str())
     )
 
     def __init__(self, paths, rewrite=False):
@@ -31,7 +30,7 @@ class Engine(BaseEngine):
             ExamplePythonCode(virtualenv.bin.python, self.path.gen)
             .with_setup_code(self.given.get("setup", ""))
             .with_terminal_size(160, 100)
-            .with_strings(state=self.given['state'])
+            .with_strings(state=self.given["state"])
             .with_modules("game.py", "state.py")
         )
 

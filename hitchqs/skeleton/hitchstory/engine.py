@@ -5,14 +5,10 @@ from strictyaml import CommaSeparated, Str, Int
 
 class Engine(BaseEngine):
     # https://hitchdev.com/hitchstory/using/alpha/given
-    given_definition = GivenDefinition(
-        example_precondition=GivenProperty(Str())
-    )
+    given_definition = GivenDefinition(example_precondition=GivenProperty(Str()))
 
     # https://hitchdev.com/hitchstory/using/alpha/metadata
-    info_definition = InfoDefinition(
-        jiras=InfoProperty(schema=CommaSeparated(Str())),
-    )
+    info_definition = InfoDefinition(jiras=InfoProperty(schema=CommaSeparated(Str())))
 
     def __init__(self, paths):
         self.path = paths
