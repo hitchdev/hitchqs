@@ -9,8 +9,8 @@ About skeleton templates:
       args: skeleton
       exit code: 0
       will output: |-
-        key
-        hitchstory
+        hk --skeleton hitchstory  # hk skeleton with hitchstory installed
+        hk --skeleton key         # basic hitchkey skeleton
 
 
 About demo templates:
@@ -24,7 +24,7 @@ About demo templates:
       args: demo
       exit code: 0
       will output: |-
-        seleniumdirector
-        pythonapi
-        key
-        hitchstory
+        hk --demo hitchstory        # demo of hitchstory
+        hk --demo key               # demo of hitchkey's capabilities
+        hk --demo pythonapi         # Example API test.
+        hk --demo seleniumdirector  # Example selenium demo.

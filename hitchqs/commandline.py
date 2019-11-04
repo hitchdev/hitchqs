@@ -13,12 +13,18 @@ def run():
     assert len(arguments) == 1 or len(arguments) == 2
     template_type = arguments[0]
     assert template_type in ["demo", "skeleton"]
-    available_templates = [
+    available_templates = sorted([
         str(path.basename()) for path in THIS_DIR.joinpath(template_type).listdir()
-    ]
+    ])
 
     if len(arguments) == 1:
-        print("\n".join(available_templates))
+        template_commands = ["hk --{} {}".format(template_type, template) for template in available_templates]
+        for template, template_command in zip(available_templates, template_commands):
+            print("{}{}  # {}".format(
+                template_command,
+                (max([len(cmd) for cmd in template_commands]) - len(template_command)) * " ",
+                load(THIS_DIR.joinpath(template_type, template, "hitchqs.yml").text()).data['about'],
+            ))
         exit(0)
 
     template = arguments[1]
@@ -44,7 +50,7 @@ def run():
         exit(1)
     cwd = Path(os.getcwd()).abspath()
     dirtemplate.DirTemplate(
-        name=project_path_name, src=template_path, dest=cwd
+        src=template_path, dest=cwd / project_path_name
     ).ignore_files("hitchqs.yml").ensure_built()
-    Path("builddb.sqlite").remove()
+    Path(cwd / project_path_name / "fingerprint.txt").remove()
     print("Quickstart run successfully!")
