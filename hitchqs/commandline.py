@@ -13,18 +13,29 @@ def run():
     assert len(arguments) == 1 or len(arguments) == 2
     template_type = arguments[0]
     assert template_type in ["demo", "skeleton"]
-    available_templates = sorted([
-        str(path.basename()) for path in THIS_DIR.joinpath(template_type).listdir()
-    ])
+    available_templates = sorted(
+        [str(path.basename()) for path in THIS_DIR.joinpath(template_type).listdir()]
+    )
 
     if len(arguments) == 1:
-        template_commands = ["hk --{} {}".format(template_type, template) for template in available_templates]
+        template_commands = [
+            "hk --{} {}".format(template_type, template)
+            for template in available_templates
+        ]
         for template, template_command in zip(available_templates, template_commands):
-            print("{}{}  # {}".format(
-                template_command,
-                (max([len(cmd) for cmd in template_commands]) - len(template_command)) * " ",
-                load(THIS_DIR.joinpath(template_type, template, "hitchqs.yml").text()).data['about'],
-            ))
+            print(
+                "{}{}  # {}".format(
+                    template_command,
+                    (
+                        max([len(cmd) for cmd in template_commands])
+                        - len(template_command)
+                    )
+                    * " ",
+                    load(
+                        THIS_DIR.joinpath(template_type, template, "hitchqs.yml").text()
+                    ).data["about"],
+                )
+            )
         exit(0)
 
     template = arguments[1]
