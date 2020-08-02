@@ -29,5 +29,5 @@ Demo Python API:
   - hk:
       args: bdd glider
       will output: |-
-        RUNNING Glider in /path/to/pythonapi/hitch/story/glider.story ... SUCCESS in n.n seconds.
+        RUNNING Glider in /path/to/pythonapi/story/glider.story ... SUCCESS in n.n seconds.
       in dir: pythonapi/
