@@ -85,9 +85,11 @@ class Engine(BaseEngine):
         )
 
     @validate(timeout=Int(), exit_code=Int())
+    @no_stacktrace_for(AssertionError)
     def quickstart(self, args, will_output=None, exit_code=0, timeout=5):
         self._run(self.qs.in_dir(self.path.state), args, will_output, exit_code, timeout=timeout)
 
+    @no_stacktrace_for(AssertionError)
     def hk(self, args, will_output=None, exit_code=0, timeout=5, in_dir=""):
         if self._build:
             self._run(Command("hk").in_dir(self.path.state / in_dir), args, will_output, exit_code, timeout=timeout)

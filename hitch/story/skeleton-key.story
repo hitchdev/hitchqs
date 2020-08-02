@@ -14,5 +14,5 @@ Skeleton key.py:
       - hitch/key.py
   - initial hk
   - hk:
-      args: helloworld
-      will output: Hello world
+      args: hello world
+      will output: world
