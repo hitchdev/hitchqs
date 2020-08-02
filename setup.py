@@ -37,7 +37,7 @@ setup(name="hitchqs",
     url='https://hitchdev.com/hitchstory/',
     license='MIT',
     install_requires=[
-        'dirtemplate>=0.3.0',
+        'dirtemplate>=0.4.0',
         'path.py',
     ],
     packages=find_packages(exclude=["docs", ]),

@@ -1,66 +1,26 @@
-from hitchstory import HitchStoryException, StoryCollection
+from hitchstory import HitchStoryException
 from hitchrun import expected
 from commandlib import CommandError
-from strictyaml import Str, Map, Bool, load
+from strictyaml import load
 from pathquery import pathquery
 from hitchrun import DIR
 import dirtemplate
 import hitchpylibrarytoolkit
 from engine import Engine
 
-
 PROJECT_NAME = "hitchqs"
 
-"""
-----------------------------
-Non-runnable utility methods
----------------------------
-"""
-
-
-def _storybook(**kwargs):
-    return StoryCollection(pathquery(DIR.key).ext("story"), Engine(DIR, **kwargs))
-
-
-def _current_version():
-    return DIR.project.joinpath("VERSION").bytes().decode("utf8").rstrip()
-
-
-def _personal_settings():
-    settings_file = DIR.key.joinpath("personalsettings.yml")
-
-    if not settings_file.exists():
-        settings_file.write_text(
-            (
-                "engine:\n"
-                "  rewrite: no\n"
-                "  cprofile: no\n"
-                "params:\n"
-                "  python version: 3.7.0\n"
-            )
-        )
-    return load(
-        settings_file.bytes().decode("utf8"),
-        Map(
-            {
-                "engine": Map({"rewrite": Bool(), "cprofile": Bool()}),
-                "params": Map({"python version": Str()}),
-            }
-        ),
-    )
-
-
-"""
------------------
-RUNNABLE COMMANDS
------------------
-"""
+toolkit = hitchpylibrarytoolkit.ProjectToolkit(
+    "hitchqs",
+    DIR,
+    Engine,
+)
 
 
 @expected(HitchStoryException)
 def bdd(*keywords):
-    """Run individual story matching key words."""
-    _storybook().only_uninherited().shortcut(*keywords).play()
+    """Run single story."""
+    toolkit.bdd(Engine(DIR), keywords)
 
 
 @expected(HitchStoryException)
@@ -68,13 +28,13 @@ def rbdd(*keywords):
     """
     Run story matching keywords and rewrite story if code changed.
     """
-    _storybook(rewrite=True).only_uninherited().shortcut(*keywords).play()
+    toolkit.bdd(Engine(DIR, rewrite=True), keywords)
 
 
 @expected(HitchStoryException)
 def bbdd(*keywords):
     """Run individual story matching key words and build."""
-    _storybook(build=True).only_uninherited().shortcut(*keywords).play()
+    toolkit.bdd(Engine(DIR, build=True), keywords)
 
 
 @expected(HitchStoryException)
@@ -82,29 +42,28 @@ def regression():
     """
     Run regression testing - lint and then run all tests.
     """
-    lint()
-    _storybook().ordered_by_name().play()
+    toolkit.regression(Engine(DIR))
 
 
 def reformat():
     """
     Reformat using black and then relint.
     """
-    hitchpylibrarytoolkit.reformat(DIR.project, PROJECT_NAME)
+    toolkit.reformat()
 
 
 def lint():
     """
     Lint project code and hitch code.
     """
-    hitchpylibrarytoolkit.lint(DIR.project, PROJECT_NAME)
+    toolkit.lint()
 
 
 def deploy(version):
     """
     Deploy to pypi as specified version.
     """
-    hitchpylibrarytoolkit.deploy(DIR.project, PROJECT_NAME, version)
+    toolkit.deploy(version)
 
 
 @expected(dirtemplate.exceptions.DirTemplateException)
@@ -112,7 +71,7 @@ def docgen():
     """
     Build documentation.
     """
-    hitchpylibrarytoolkit.docgen(_storybook({}), DIR.project, DIR.key, DIR.gen)
+    toolkit.docgen()
 
 
 @expected(dirtemplate.exceptions.DirTemplateException)
@@ -120,9 +79,7 @@ def readmegen():
     """
     Build README.md and CHANGELOG.md.
     """
-    hitchpylibrarytoolkit.readmegen(
-        _storybook({}), DIR.project, DIR.key, DIR.gen, PROJECT_NAME
-    )
+    toolkit.readmegen()
 
 
 @expected(CommandError)

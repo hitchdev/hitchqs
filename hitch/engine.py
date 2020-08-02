@@ -32,10 +32,15 @@ class Engine(BaseEngine):
     def __init__(self, keypath, rewrite=False, build=False):
         self.path = keypath
         self._rewrite = rewrite
-        self._build = build
+        self._build = hitchpylibrarytoolkit.PyLibraryBuild(
+            "hitchqs",
+            self.path,
+        )
 
     def set_up(self):
-        """Set up your applications and the test environment."""
+        """Set up your applications and the test environment."""  
+        self._build.ensure_built()
+        
         self.path.state = self.path.project.parent / "tempqs"
         if self.path.state.exists():
             self.path.state.rmtree(ignore_errors=True)
@@ -52,11 +57,7 @@ class Engine(BaseEngine):
         if not self.path.profile.exists():
             self.path.profile.mkdir()
 
-        self.qs = hitchpylibrarytoolkit.project_build(
-            "hitchqs",
-            self.path,
-            self.given["python version"],
-        ).bin.quickstart
+        self.qs = self._build.bin.quickstart
 
     def _run(self, command, args, will_output=None, exit_code=0, timeout=5):
         process = command(*shlex.split(args)).interact().screensize(160, 80).run()

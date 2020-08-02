@@ -24,10 +24,10 @@ Demo Python API:
       - pythonapi/story/glider.story
       - pythonapi/requirements.txt
   - initial hk:
-      args: bdd print
+      args: bdd glider
       in dir: pythonapi/
   - hk:
-      args: bdd print
+      args: bdd glider
       will output: |-
-        RUNNING Print the addition of two numbers in /path/to/pythonapi/hitch/mystory.story ... SUCCESS in n.n seconds.
+        RUNNING Glider in /path/to/pythonapi/hitch/story/glider.story ... SUCCESS in n.n seconds.
       in dir: pythonapi/

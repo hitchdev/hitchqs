@@ -18,11 +18,10 @@ class Engine(BaseEngine):
     def set_up(self):
         virtualenv = (
             hitchbuildpy.VirtualenvBuild(
-                hitchbuildpy.PyenvBuild("3.7.0").with_build_path(self.path.share),
-                name="venv",
+                self.path.gen / "venv",
+                hitchbuildpy.PyenvBuild(self.path.share / "python3.7.0", "3.7.0"),
             )
             .with_requirementstxt("requirements.txt")
-            .with_build_path(self.path.gen)
         )
         virtualenv.ensure_built()
 
