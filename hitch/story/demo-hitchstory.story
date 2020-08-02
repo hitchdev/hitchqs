@@ -20,7 +20,7 @@ Demo Tutorial:
   - hk:
       args: bdd email
       will output: |-
-        RUNNING Email sent in /home/colm/hitch/tempqs/hitch/mystory.story ... set up
+        RUNNING Email sent in /path/to/hitch/mystory.story ... set up
         /login
         password: hunter2
         username: AzureDiamond
@@ -34,5 +34,5 @@ Demo Tutorial:
         send email
         email was sent
         success
-        SUCCESS in 0.0 seconds.
+        SUCCESS in n.n seconds.
         tear down run
