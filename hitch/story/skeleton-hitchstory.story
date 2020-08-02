@@ -18,4 +18,5 @@ Skeleton Hitchstory:
   - initial hk
   - hk:
       args: bdd my story
-      will output: x
+      will output: |-
+        RUNNING My first story in /path/to/hitch/mystory.story ... SUCCESS in n.n seconds.
